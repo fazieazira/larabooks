@@ -33,3 +33,10 @@ Route::get('/hello2/{user}', function ($user) {
 use App\Http\Controllers\BookController;
 
 Route::resource('books', BookController::class);
+
+
+use App\Http\Controllers\BookCategoryController;
+
+Route::resource('bookcategories', BookCategoryController::class);
+
+

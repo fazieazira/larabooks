@@ -11,5 +11,11 @@
     <div class="container mx-auto px-4 py-8">
         @yield('content')
     </div>
+	
+<nav class="mb-6">
+    <a href="{{ route('books.index') }}" class="text-blue-600 mr-4">Books</a>
+    <a href="{{ route('bookcategories.index') }}" class="text-blue-600">Categories</a>
+</nav>
+
 </body>
 </html>

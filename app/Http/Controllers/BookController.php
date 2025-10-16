@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 // use Model in controller
 use Illuminate\Http\Request;
 use App\Models\Book;
+use App\Models\BookCategory;
 use Illuminate\Http\RedirectResponse;
 
 
@@ -17,8 +18,9 @@ class BookController extends Controller
     {
         //return view('books.index');
 		
-		$books = Book::all();
-        return view('books.index', compact('books'));
+	    $books = Book::all();
+        $categories = BookCategory::all();
+        return view('books.index', compact('books', 'categories'));
     }
 
     /**
@@ -26,7 +28,9 @@ class BookController extends Controller
      */
     public function create()
     {
-        return view('books.create');    
+		$categories = BookCategory::all();
+		return view('books.create', compact('categories'));
+   
     }
 
     /**
@@ -35,8 +39,10 @@ class BookController extends Controller
     public function store(Request $request): RedirectResponse
     {
          // Validate the incoming request
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
+			$validated = $request->validate([
+			'title' => 'required|string|max:255',
+			'book_category_id' => 'nullable|exists:book_categories,id',
+
         ]);
 
         // Create and save the book
@@ -59,7 +65,9 @@ class BookController extends Controller
      */
 	public function edit(Book $book)
 	{
-		return view('books.edit', compact('book'));
+    $categories = BookCategory::all();
+    return view('books.edit', compact('book', 'categories'));
+
 	}
 
     /**
@@ -67,8 +75,10 @@ class BookController extends Controller
      */
 	public function update(Request $request, Book $book): RedirectResponse
 	{
-		$validated = $request->validate([
-        'title' => 'required|string|max:255',
+	$validated = $request->validate([
+    'title' => 'required|string|max:255',
+    'book_category_id' => 'nullable|exists:book_categories,id',
+
     ]);
 
     $book->update($validated);

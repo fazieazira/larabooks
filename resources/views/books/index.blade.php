@@ -28,6 +28,9 @@
         @foreach ($books as $book)
         <li class="flex mb-1">
             <span class="flex-1">{{ $book->title }}</span>
+			@if($book->category)
+                <span class="text-gray-500"> ({{ $book->category->name }})</span>
+            @endif
             <a href="{{ route('books.show', $book) }}" class="mr-2 text-blue-600">View</a>
             <a href="{{ route('books.edit', $book) }}" class="mr-2 text-green-600">Edit</a>
             <form action="{{ route('books.destroy', $book) }}" method="POST">
